@@ -21,11 +21,8 @@ export const EditPost = ({match}) => {
     const onpostSave = () => {        
         dispatch(postUpdated({id : postId, title : title, content :content}));
         history.push(`/post/${postId}`);
-    }
-    
-   
-   
-    
+    }  
+     
     return(
         <section>
       <h2>Edit Post</h2>
