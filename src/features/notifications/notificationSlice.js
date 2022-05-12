@@ -3,26 +3,33 @@ import React from "react";
 import { client } from "../../api/client";
 
 export const fetchNotifications = createAsyncThunk('notifications/fetchNotifications',
-async (_,{getState}) => {
-    const allnotifications = selectAllNotifications(getState());
-    const [latestNotification] = allnotifications
-    const latestTimestamp = latestNotification ? latestNotification.date : '';
-    const response = await client.get(
-        `/fakeApi/notifications?since=${latestTimestamp}`
-    );
-    return response.data
-}
+    async (_,{getState}) => {
+       
+        const allnotifications = selectAllNotifications(getState());
+        console.log(allnotifications,'hghg');
+
+        // const [latestNotification] = allnotifications;
+        
+        const latestTimestamp = '';
+        
+        const response = await client.get(
+            `/fakeApi/notifications?since=${latestTimestamp}`
+        );
+        console.log(response);
+        return response.data
+    }
 )
 
  const NotificationSlice = createSlice({
     name : 'notifications',
-    initialState : [],
+    initialState : { noti : [] , status : 'pending'},
     reducers : {},
     extraReducers(builder){
         builder.addCase(fetchNotifications.fulfilled, (state,action) => {
-            const copy = state;
+            console.log('test');
+            const copy = state.noti;
             copy.push(...action.payload);
-            state = copy;
+            state = {...copy,status : 'success'};
             console.log(state);
         })
     }
